@@ -12,6 +12,8 @@
 #define FUN         6
 #define GAME        7
 #define GAMENUM     8
+#define U_MT(MOD, TAP) &u_mt MOD TAP
+#define U_LT(LAYER, TAP) &u_lt LAYER TAP
 
 / {
     keymap {
