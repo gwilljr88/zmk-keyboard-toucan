@@ -52,7 +52,10 @@
             >;
         };
 
-        extra1 { status = "reserved"; };
+        NUM {
+            status = "reserved";
+            label = "NUM";
+        };
 
         extra2 { status = "reserved"; };
 
