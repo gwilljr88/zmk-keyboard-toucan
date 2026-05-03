@@ -15,17 +15,39 @@
 #define GAME     7
 #define GAMENUM  8
 
+// Define your timing variable here if not defined elsewhere
+#define U_TAPPING_TERM 200
+
 / {
+    behaviors {
+        u_mt: u_mt {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <U_TAPPING_TERM>;
+            flavor = "tap-preferred";
+            quick-tap-ms = <175>;
+            bindings = <&kp>, <&kp>;
+        };
+        u_lt: u_lt {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <U_TAPPING_TERM>;
+            flavor = "tap-preferred";
+            quick-tap-ms = <175>;
+            bindings = <&mo>, <&kp>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
         base_layer {
             display-name = "BASE";
             bindings = <
-&none  &kp Q      &kp W      &kp F       &kp P       &kp B    &kp J  &kp L       &kp U       &kp Y      &kp SQT    &none
-&none  &mt LGUI A &mt LALT R &mt LCTRL S &mt LSHFT T &kp G    &kp M  &mt LSHFT N &mt LCTRL E &mt LALT I &mt LGUI O &none
-&none  &kp Z      &kp X      &kp C       &kp D       &kp V    &kp K  &kp H       &kp COMMA   &kp DOT    &kp SLASH  &none
-                  &lt MEDIA ESC &lt NAV SPACE &lt MOUSE TAB    &lt SYM RET &lt NUM BSPC &lt FUN DEL
+&none  &kp Q         &kp W         &kp F          &kp P          &kp B    &kp J  &kp L          &kp U          &kp Y         &kp SQT       &none
+&none  &u_mt LGUI A  &u_mt LALT R  &u_mt LCTRL S  &u_mt LSHFT T  &kp G    &kp M  &u_mt LSHFT N  &u_mt LCTRL E  &u_mt LALT I  &u_mt LGUI O  &none
+&none  &kp Z         &kp X         &kp C          &kp D          &kp V    &kp K  &kp H          &kp COMMA      &kp DOT       &kp SLASH     &none
+                     &u_lt MEDIA ESC &u_lt NAV SPACE &u_lt MOUSE TAB      &u_lt SYM RET  &u_lt NUM BSPC &u_lt FUN DEL
             >;
         };
 
@@ -95,7 +117,7 @@
 &none  &kp TAB   &kp Q  &kp W   &kp E     &kp R    &kp Y  &kp U  &kp I     &kp O   &to BASE  &none
 &none  &kp LCTRL &kp A  &kp S   &kp D     &kp F    &kp H  &kp J  &kp K     &kp L   &kp SQT   &none
 &none  &kp LSHFT &kp Z  &kp X   &kp C     &kp V    &kp N  &kp M  &kp COMMA &kp DOT &kp SLASH &none
-                        &kp ESC &kp SPACE &lt GAMENUM LALT    &kp RET &kp BSPC &kp DEL
+                        &kp ESC &kp SPACE &u_lt GAMENUM LALT  &kp RET &kp BSPC &kp DEL
             >;
         };
 
