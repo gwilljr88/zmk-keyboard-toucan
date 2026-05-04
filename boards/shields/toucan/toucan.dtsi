@@ -105,16 +105,39 @@
 
     glidepoint_listener: glidepoint_listener {
         compatible = "zmk,input-listener";
-        status = "disabled";
+        /* Change status to "okay" to enable it */
+        status = "okay"; 
         device = <&glidepoint_split>;
-        input-processors = <&zip_xy_scaler 250 100>;
+        
+        /* Mac-like Cursor: 
+           Added zip_inertial_cursor for that "flick" glide feel 
+        */
+        input-processors = <
+            &zip_xy_scaler 250 100
+            &zip_inertial_cursor
+            &zip_xy_to_scroll_mapper
+        >;
+
+        /* Mac-style Scrolling:
+           - Inverted Y (Natural Scrolling)
+           - Scaled for smoothness
+        */
         scroller {
             layers = <1 2>;
             input-processors = <
-                &zip_xy_to_scroll_mapper
-                &zip_scroll_scaler 1 5
-                &zip_scroll_transform INPUT_TRANSFORM_X_INVERT
+                &zip_scroll_scaler 2 1
+                &zip_scroll_transform INPUT_TRANSFORM_Y_INVERT
             >;
         };
     };
+};
+
+/* Ensure your hardware node is configured for Absolute mode. 
+   Usually found in your board's .dts or another part of the .dtsi 
+*/
+&glidepoint {
+    status = "okay";
+    data-mode = "absolute";     // Required for multi-touch gestures
+    primary-tap-enable;         // Enables Tap-to-click
+    secondary-tap-enable;       // Enables Two-finger tap for Right Click
 };
