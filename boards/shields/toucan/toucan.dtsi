@@ -134,7 +134,6 @@
         compatible = "cirque,pinnacle";
         reg = <0x2a>;
         status = "okay";
-        drdy-gpios = <&gpio0 10 (GPIO_ACTIVE_HIGH)>; // Verify this pin for Toucan
         
         /* Mac-like hardware settings */
         data-mode = "absolute";
