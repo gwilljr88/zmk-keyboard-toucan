@@ -108,18 +108,18 @@
         status = "okay"; 
         device = <&glidepoint_split>;
         
+        /* Removed &zip_inertial_cursor to fix the build error */
         input-processors = <
             &zip_xy_scaler 250 100
-            &zip_inertial_cursor
             &zip_xy_to_scroll_mapper
         >;
 
         scroller {
             layers = <1 2>;
             input-processors = <
-                &zip_xy_scaler 1 1             // Start at 1:1 and increase if needed
-                &zip_inertial_cursor           // Keep this for the "glide" effect
-                &zip_xy_to_scroll_mapper
+                &zip_scroll_scaler 2 1
+                /* Natural Scrolling is handled here */
+                &zip_scroll_transform INPUT_TRANSFORM_Y_INVERT
             >;
         };
     };
