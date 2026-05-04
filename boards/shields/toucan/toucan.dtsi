@@ -128,16 +128,3 @@
 /* This part defines the hardware. 
    On XIAO BLE boards like Toucan, the internal I2C is usually &i2c0.
 */
-&i2c0 {
-    status = "okay";
-    glidepoint: glidepoint@2a {
-        compatible = "cirque,pinnacle";
-        reg = <0x2a>;
-        status = "okay";
-        
-        /* Mac-like hardware settings */
-        data-mode = "absolute";
-        primary-tap-enable;
-        secondary-tap-enable;
-    };
-};
