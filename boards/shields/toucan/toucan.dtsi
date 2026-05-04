@@ -105,39 +105,40 @@
 
     glidepoint_listener: glidepoint_listener {
         compatible = "zmk,input-listener";
-        /* Change status to "okay" to enable it */
         status = "okay"; 
         device = <&glidepoint_split>;
         
-        /* Mac-like Cursor: 
-           Added zip_inertial_cursor for that "flick" glide feel 
-        */
         input-processors = <
             &zip_xy_scaler 250 100
             &zip_inertial_cursor
             &zip_xy_to_scroll_mapper
         >;
 
-        /* Mac-style Scrolling:
-           - Inverted Y (Natural Scrolling)
-           - Scaled for smoothness
-        */
         scroller {
             layers = <1 2>;
             input-processors = <
-                &zip_scroll_scaler 2 1
-                &zip_scroll_transform INPUT_TRANSFORM_Y_INVERT
+                &zip_xy_scaler 1 1             // Start at 1:1 and increase if needed
+                &zip_inertial_cursor           // Keep this for the "glide" effect
+                &zip_xy_to_scroll_mapper
             >;
         };
     };
 };
 
-/* Ensure your hardware node is configured for Absolute mode. 
-   Usually found in your board's .dts or another part of the .dtsi 
+/* This part defines the hardware. 
+   On XIAO BLE boards like Toucan, the internal I2C is usually &i2c0.
 */
-&glidepoint {
+&i2c0 {
     status = "okay";
-    data-mode = "absolute";     // Required for multi-touch gestures
-    primary-tap-enable;         // Enables Tap-to-click
-    secondary-tap-enable;       // Enables Two-finger tap for Right Click
+    glidepoint: glidepoint@2a {
+        compatible = "cirque,pinnacle";
+        reg = <0x2a>;
+        status = "okay";
+        drdy-gpios = <&gpio0 10 (GPIO_ACTIVE_HIGH)>; // Verify this pin for Toucan
+        
+        /* Mac-like hardware settings */
+        data-mode = "absolute";
+        primary-tap-enable;
+        secondary-tap-enable;
+    };
 };
