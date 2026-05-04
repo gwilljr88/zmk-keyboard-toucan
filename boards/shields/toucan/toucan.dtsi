@@ -105,26 +105,16 @@
 
     glidepoint_listener: glidepoint_listener {
         compatible = "zmk,input-listener";
-        status = "okay"; 
+        status = "disabled";
         device = <&glidepoint_split>;
-        
-        /* Removed &zip_inertial_cursor to fix the build error */
-        input-processors = <
-            &zip_xy_scaler 1 2
-            &zip_xy_to_scroll_mapper
-        >;
-
+        input-processors = <&zip_xy_scaler 250 100>;
         scroller {
             layers = <1 2>;
             input-processors = <
-                &zip_scroll_scaler 2 1
-                /* Natural Scrolling is handled here */
-                //&zip_scroll_transform INPUT_TRANSFORM_Y_INVERT
+                &zip_xy_to_scroll_mapper
+                &zip_scroll_scaler 1 5
+                &zip_scroll_transform INPUT_TRANSFORM_X_INVERT
             >;
         };
     };
 };
-
-/* This part defines the hardware. 
-   On XIAO BLE boards like Toucan, the internal I2C is usually &i2c0.
-*/
