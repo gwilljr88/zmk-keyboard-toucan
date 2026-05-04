@@ -67,9 +67,9 @@
         x-invert;
 
         /* --- ADDED: Mac-like hardware settings --- */
-        //data-mode = "absolute";
-        //primary-tap-enable;
-        //secondary-tap-enable;
+        data-mode = "absolute";
+        primary-tap-enable;
+        secondary-tap-enable;
         /* ----------------------------------------- */
 
         // Optional: turning this on enables very aggressive power saving, after 5 seconds with no touches
